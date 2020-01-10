@@ -1,0 +1,32 @@
+
+
+# Base setup
+version: "3"
+services:
+
+# Node
+  app:
+    restart: always
+    container_name: app
+    volumes:
+      - ./code:/code
+    command: tail -f /dev/null
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - postgres
+    environment:
+      - PGHOST=postgres
+      - PGDATABASE=postgres
+      - PGUSER=postgres
+      - PGPASSWORD=postgres
+
+  postgres:
+    restart: always
+    image: postgres:11.2-alpine
+    ports:
+      - "5432:54329"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
